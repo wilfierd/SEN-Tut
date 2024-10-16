@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{_layout}">
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/script.js}"></script>
+</head>
+<body>
+<!-- Fixed navbar with buttons -->
+<div class="navigation">
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid justify-content-start">
+            <a class="btn home-button nav-button" th:href="@{'/'}">Home</a>
+            <a class="btn list-button nav-button" th:href="@{'/list'}">Employee List</a>
+            <a th:href="@{/logout}" class="btn btn-outline-info">Logout</a>
+        </div>
+    </nav>
+</div>
+
+<!-- Main content area -->
+<div layout:fragment="content" class="content-container">
+    <img th:src="@{/image/emp.png}" class="centered-image" alt="Employee Image">
+</div>
+</body>
+</html>

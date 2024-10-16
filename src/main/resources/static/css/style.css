@@ -1,0 +1,109 @@
+/* General body styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    color: #333;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+/* Navbar fixed in the top-left corner */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+/* Navbar container */
+.navbar .container-fluid {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    padding: 10px 20px;
+}
+
+/* Button styling to match the image */
+.nav-button {
+    padding: 10px 30px;
+    border-radius: 30px; /* Soft rounded corners */
+    border: 2px solid transparent; /* Border will change per button */
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    margin: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: transparent; /* Transparent background */
+    text-align: center;
+}
+
+/* Home button styles (pink border and text) */
+.home-button {
+    border-color: #ff4b2b; /* Pink border */
+    color: #ff4b2b; /* Pink text */
+}
+
+.home-button:hover {
+    background-color: rgba(255, 75, 43, 0.1); /* Light pink fill on hover */
+}
+
+/* Employee list button styles (green border and text) */
+.list-button {
+    border-color: #28a745; /* Green border */
+    color: #28a745; /* Green text */
+}
+
+.list-button:hover {
+    background-color: rgba(40, 167, 69, 0.1); /* Light green fill on hover */
+}
+
+/* Logout button styles (light blue border and text) */
+.logout-button {
+    border-color: #17a2b8; /* Blue border */
+    color: #17a2b8; /* Blue text */
+}
+
+.logout-button:hover {
+    background-color: rgba(23, 162, 184, 0.1); /* Light blue fill on hover */
+}
+
+/* Container for the main content */
+.content-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding-top: 70px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Image styling */
+.centered-image {
+    max-width: 80%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s ease;
+}
+
+.centered-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Error message styling */
+.error {
+    color: red;
+    font-weight: bold;
+    font-style: italic;
+    margin-top: 3px;
+    text-align: center;
+}
