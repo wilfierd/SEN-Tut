@@ -19,6 +19,21 @@ public class Employee {
     private String image;
     private String address;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
+    private Company company;
+
+
+    // Constructors
+    public Employee() {}
+
+    public Employee(String name, Integer age, String address, String image, Company company) {
+        this.name = name;
+        this.age = age;
+        this.address = address;
+        this.image = image;
+        this.company = company;
+    }
     // Getters and Setters
 
 
@@ -62,6 +77,14 @@ public class Employee {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }
 

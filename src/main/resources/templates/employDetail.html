@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.w3.org/1999/xhtml">>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -70,19 +70,24 @@
         <h2 class="text-primary mb-4">Employee Detail</h2>
         <div class="row align-items-center">
             <div class="col-md-5">
+                <!-- Corrected th:src -->
                 <img th:src="@{${employee.image}}" width="200" height="200" alt="Employee Image" class="employee-image">
             </div>
             <div class="col-md-7 employee-details text-start">
-                <h1 th:text="${employee.name}"></h1>
-                <h3 th:text="'Age: ' + ${employee.age}"></h3>
-                <h3 th:text="'Address: ' + ${employee.address}"></h3>
+                <h1 th:text="${employee.name}">Employee Name</h1>
+                <h3 th:text="'Age: ' + ${employee.age}">Age: </h3>
+                <h3 th:text="'Address: ' + ${employee.address}">Address: </h3>
+<!--                <h3 th:if="${employee.company != null}"-->
+<!--                    th:text="'Company: ' + ${employee.company.name}">Company: </h3>-->
             </div>
         </div>
 
         <div class="mt-4">
-            <a href="/list" class="btn back-btn me-2">Back to List</a>
-            <a th:href="@{'/update/' + ${employee.id}}" class="btn edit-btn me-2">Edit Employee</a>
-            <a th:href="@{'/delete/' + ${employee.id}}" class="btn delete-btn">Delete Employee</a>
+            <a href="/employee/list" class="btn back-btn me-2">Back to List</a>
+            <!-- Corrected th:href for Edit -->
+            <a th:href="@{/update/{id}(id=${employee.id})}" class="btn edit-btn me-2">Edit Employee</a>
+            <!-- Corrected th:href for Delete -->
+            <a th:href="@{/delete/{id}(id=${employee.id})}" class="btn delete-btn">Delete Employee</a>
         </div>
 
     </div>

@@ -1,34 +1,267 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Employee</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
           rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT9WrHftjDbrCEXSU1oqyl2QvZ6jIW3"
+          integrity="sha384-ENjdO4Dr2bkBIFxQpeoF8rNQe5S3IePc4fRJvYqV/SQnE+FvR+8abtTE1Pi6jizo"
           crossorigin="anonymous">
+    <!-- Font Awesome for Icons (Optional) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Apply box-sizing to all elements for consistent sizing */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #50e3c2;
+            --accent-color: #9013fe;
+            --background-color: #f5f7fa;
+            --card-bg-color: #ffffff;
+            --text-color: #333333;
+            --input-border-color: #dcdcdc;
+            --success-color: #28a745;
+            --cancel-color: #dc3545;
+        }
+
+        body {
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            margin: 0; /* Remove default margin */
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px; /* Maintained max-width for optimal readability */
+        }
+
+        .card {
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background-color: var(--card-bg-color);
+            border: none;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .card-header h3 {
+            font-weight: 600;
+            font-size: 1.75rem;
+            margin: 0;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .btn-custom {
+            border-radius: 50px;
+            padding: 0.75rem 2rem;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn-custom.btn-success {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-custom.btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+        .btn-custom.btn-secondary {
+            background-color: var(--cancel-color);
+            border-color: var(--cancel-color);
+            color: white;
+        }
+
+        .btn-custom.btn-secondary:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+        .form-label {
+            color: var(--text-color);
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 1px solid var(--input-border-color);
+            padding: 0.75rem 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            /* Remove default height to prevent overflow */
+            height: auto;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 5px rgba(144, 19, 254, 0.3);
+            outline: none; /* Remove default outline */
+        }
+
+        .invalid-feedback {
+            font-size: 0.875em;
+            color: #e74c3c;
+            margin-top: 0.25rem;
+            display: none; /* Hidden by default */
+        }
+
+        /* Show invalid-feedback when input is invalid */
+        .is-invalid + .invalid-feedback {
+            display: block;
+        }
+
+        /* Increased spacing between form groups */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 576px) {
+            .card-body {
+                padding: 1.5rem;
+            }
+
+            .btn-custom {
+                width: 100%;
+                margin-bottom: 0.75rem;
+            }
+        }
+
+        /* Optional: Style for input-group if using icons */
+        .input-group-text {
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--input-border-color);
+            border-right: none;
+            border-radius: 10px 0 0 10px;
+        }
+
+        .input-group .form-control {
+            border-radius: 0 10px 10px 0;
+            border-left: none;
+        }
+    </style>
 </head>
 <body>
-<div class="container col-md-4 text-center mt-4">
-    <h2 class="text-center text-primary">ADD EMPLOYEE</h2>
-    <form th:action="@{/save}" th:object="${employee}" method="post">
-        <fieldset class="form-group">
-            <label>Employee name</label>
-            <input class="form-control" type="text" th:field="*{name}">
-            <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}" />
-        </fieldset>
-        <fieldset class="form-group">
-            <label>Employee age</label>
-            <input class="form-control" type="number" th:field="*{age}">
-            <p th:if="${#fields.hasErrors('age')}" th:errorclass="error" th:errors="*{age}" />
-        </fieldset>
-        <fieldset class="form-group">
-            <label>Employee image</label>
-            <input class="form-control" type="text" th:field="*{image}">
-            <p th:if="${#fields.hasErrors('image')}" th:errorclass="error" th:errors="*{image}" />
-        </fieldset>
-        <button type="submit" class="btn btn-success">Add</button>
-    </form>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h3>Add New Employee</h3>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/employee/save}" th:object="${employee}" method="post" novalidate>
+                <!-- Employee Name -->
+                <div class="form-group">
+                    <label for="name" class="form-label">Employee Name</label>
+                    <input type="text" class="form-control" id="name" th:field="*{name}"
+                           placeholder="Enter employee name" required
+                           th:classappend="${#fields.hasErrors('name')} ? ' is-invalid' : ''">
+                    <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback d-block"
+                         th:errors="*{name}"></div>
+                </div>
+
+                <!-- Employee Age -->
+                <div class="form-group">
+                    <label for="age" class="form-label">Age</label>
+                    <input type="number" class="form-control" id="age" th:field="*{age}"
+                           placeholder="Enter age" min="18" required
+                           th:classappend="${#fields.hasErrors('age')} ? ' is-invalid' : ''">
+                    <div th:if="${#fields.hasErrors('age')}" class="invalid-feedback d-block"
+                         th:errors="*{age}"></div>
+                </div>
+
+                <!-- Employee Address -->
+                <div class="form-group">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="address" th:field="*{address}"
+                           placeholder="Enter address" required
+                           th:classappend="${#fields.hasErrors('address')} ? ' is-invalid' : ''">
+                    <div th:if="${#fields.hasErrors('address')}" class="invalid-feedback d-block"
+                         th:errors="*{address}"></div>
+                </div>
+
+                <!-- Employee Image -->
+                <div class="form-group">
+                    <label for="image" class="form-label">Image URL/Path</label>
+                    <input type="text" class="form-control" id="image" th:field="*{image}"
+                           placeholder="Enter image URL or path"
+                           th:classappend="${#fields.hasErrors('image')} ? ' is-invalid' : ''">
+                    <div th:if="${#fields.hasErrors('image')}" class="invalid-feedback d-block"
+                         th:errors="*{image}"></div>
+                </div>
+
+                <!-- Company Selection -->
+                <div class="form-group">
+                    <label for="company" class="form-label">Company</label>
+                    <select class="form-select" id="company" th:field="*{company}" required
+                            th:classappend="${#fields.hasErrors('company')} ? ' is-invalid' : ''">
+                        <option value="" disabled selected>Select Company</option>
+                        <option th:each="comp : ${companies}"
+                                th:value="${comp.id}"
+                                th:text="${comp.name}"></option>
+                    </select>
+                    <div th:if="${#fields.hasErrors('company')}" class="invalid-feedback d-block"
+                         th:errors="*{company}"></div>
+                </div>
+
+                <!-- Form Buttons -->
+                <div class="d-grid gap-3 d-sm-flex justify-content-sm-end mt-4">
+                    <button type="submit" class="btn btn-success btn-custom">Add Employee</button>
+                    <a th:href="@{/employee/list}" class="btn btn-secondary btn-custom">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+6B/QzUj1k6aF00Zff7W80Z65V1h"
+        crossorigin="anonymous"></script>
+<!-- Optional: Bootstrap Custom Validation Script -->
+<script>
+    // Bootstrap's custom validation script
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
 </body>
 </html>
